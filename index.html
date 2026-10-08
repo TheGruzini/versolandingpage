@@ -1075,9 +1075,9 @@ const homeLive=()=>{
  const scroll=(y,d)=>gsap.to(pg,{y:()=>-Math.min(y,Math.max(0,pg.offsetHeight-view.clientHeight)),duration:d,ease:'power2.inOut'});
  const press=(get,after)=>{const t=gsap.timeline();t.call(()=>tapAt(get())).fromTo(tap,{scale:.2,opacity:0},{scale:1,opacity:.9,duration:.28,ease:'power2.out'}).call(after,null,'>-.04').to(tap,{opacity:0,scale:1.6,duration:.3});return t};
  const wait=d=>gsap.to({},{duration:d});
- const tl=gsap.timeline({repeat:-1,repeatDelay:1.2});window.__ht=tl;
+ const tl=gsap.timeline({repeat:-1,repeatDelay:1.2});window.__ht=tl;tl.timeScale(2.1);
  tl.call(()=>{setPane(0);gsap.set(det,{display:'none'});gsap.set(tap,{opacity:0})})
-  .add(wait(2)).add(scroll(330,1.9)).add(wait(.8)).add(scroll(9999,2.4)).add(wait(1.2)).add(scroll(0,1.8)).add(wait(.5))
+  .add(wait(1.2)).add(scroll(330,1.9)).add(wait(.8)).add(scroll(9999,2.4)).add(wait(1.2)).add(scroll(0,1.8)).add(wait(.5))
   .add(press(()=>tabs[1],()=>setPane(1))).add(wait(1.2)).add(scroll(300,1.9)).add(wait(1)).add(scroll(0,1.3)).add(wait(.3))
   .add(press(()=>tabs[2],()=>setPane(2))).add(wait(1.2)).add(scroll(9999,4.2)).add(wait(.9)).add(scroll(0,1.8)).add(wait(.3))
   .add(press(()=>tabs[0],()=>setPane(0))).add(wait(1))
