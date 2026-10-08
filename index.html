@@ -648,7 +648,7 @@ html.a11y-still .tr .pr{width:auto!important}html.a11y-still .tr .pr .old{opacit
 .mh{font:700 15px 'Barlow Condensed',sans-serif;letter-spacing:1.5px;margin:0 2px 6px}
 .mgrid{display:grid;grid-template-columns:1fr 1fr;gap:6px}.mc{border:1.5px solid rgba(184,200,213,.3);border-radius:16px;padding:7px 8px;background:linear-gradient(180deg,#141B22,#0B1015)}
 .mc .a{display:flex;justify-content:space-between;font-size:7.5px}.mc .a>span:last-child{text-align:right}.mc .a b{display:block;font:600 7px 'JetBrains Mono',monospace;font-weight:600}.mc .a em{font:500 6.5px 'JetBrains Mono',monospace;font-style:normal}
-.mc .u{color:#7FB69A}.mc .d{color:#E57373}
+.mc .a>span:last-child{display:flex;flex-direction:column;align-items:flex-end;gap:1px}.mc .a b,.mc .a em{display:block;line-height:1.2}.mdot{width:5px;height:5px;border-radius:50%;background:#E5484D;align-self:center;animation:mdot 1.4s infinite}@keyframes mdot{50%{opacity:.25}}.mc.fl{animation:mcfl .9s}@keyframes mcfl{0%{box-shadow:0 0 14px rgba(184,200,213,.45);border-color:rgba(255,255,255,.7)}100%{box-shadow:none}}html.a11y-still .mdot,html.a11y-still .mc.fl{animation:none!important}\n.mc .u{color:#7FB69A}.mc .d{color:#E57373}
 .mc .b{display:flex;justify-content:space-between;align-items:flex-end;margin-top:9px}.mc strong{font:600 11px 'JetBrains Mono',monospace}
 .spk{width:26px;height:10px;fill:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round}.spk.u{stroke:#7FB69A}.spk.d{stroke:#E57373}.spk path{stroke:inherit}
 html.a11y-still .ltape>div{animation:none!important}
@@ -984,18 +984,30 @@ function legal(){const L=LEGAL[lang];$('#legal').innerHTML=['priv','terms','acc'
  $$('#legal button').forEach(b=>b.onclick=()=>{const d=L[b.dataset.k];$('#ldt').textContent=d[0];$('#ldb').innerHTML=d[1].map(p=>`<p>${p}</p>`).join('');$('#ldd').style.display=d[2]?'':'none';$('#ldd').textContent=L.draft;$('#ldx').setAttribute('aria-label',L.close);$('#ldlg').showModal()})}
 
 const ph=i=>`<div class="phone"><div class="scrs"><div class="scr">${LIVE[i]()}</div></div></div>`;
+const HD=[['S&P 500',7765.36,-36.41,2,''],['RSP',211.87,1.27,2,'$ '],['Nasdaq 100',30726,-434.27,0,''],['Dow Jones',51232,51.77,0,''],['Russell 2000',2794.13,0.92,2,''],['VIX',15.41,0.33,2,'']];
+const hfmt=(v,d)=>v.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
+const htm=z=>{try{return new Intl.DateTimeFormat('en-GB',{hour:'2-digit',minute:'2-digit',second:'2-digit',timeZone:z}).format(new Date())}catch(e){return'--:--:--'}};
 const HOMEM=()=>{const h0=LIVE[0](),head=h0.slice(0,h0.indexOf('<div class="ltabs">'));
- const tm=z=>{try{return new Intl.DateTimeFormat('en-GB',{hour:'2-digit',minute:'2-digit',second:'2-digit',timeZone:z}).format(new Date())}catch(e){return'--:--:--'}};
- const spk=(u,k)=>`<svg viewBox="0 0 40 14" class="spk ${u?'u':'d'}"><path d="${[M0,M1,M2,M3][k%4].map((y,i)=>(i?'L':'M')+(i*5.7).toFixed(1)+' '+(u?y:14-y)).join(' ')}"/></svg>`;
- const M0=[9,7,8,5,6,3,5,2],M1=[3,5,4,7,5,8,6,9],M2=[6,4,7,3,6,4,7,5],M3=[8,5,7,4,6,3,5,6];
- const cards=[['S&P 500','7,765.36','-0.47%','-36.41',0],['RSP','$ 211.87','+0.60%','+1.27',1],['Nasdaq 100','30,726','-1.39%','-434.27',0],['Dow Jones','51,232','+0.10%','+51.77',1],['Russell 2000','2,794.13','+0.03%','+0.92',1],['VIX','15.41','+2.19%','+0.33',1]];
  return head+`<div class="mt1"><b>MARKET</b> <b class="g">TERMINAL</b></div><div class="mt2">REAL-TIME SNAPSHOT · A BIT OF EVERYTHING</div>
- <div class="mclk"><span><b>${tm('Asia/Jerusalem')}</b><em>TLV · IL</em></span><span><b>${tm('America/New_York')}</b><em>NY · ET</em></span></div>
+ <div class="mclk"><span><b data-z="Asia/Jerusalem">${htm('Asia/Jerusalem')}</b><em>TLV · IL</em></span><span><b data-z="America/New_York">${htm('America/New_York')}</b><em>NY · ET</em></span><i class="mdot"></i></div>
  <div class="mtabs"><span class="on">MARKET INDICES</span><span>MARKET MOVERS</span><span>WEEKLY OUTLOOK</span></div>
  <div class="mh">MARKET INDICES</div>
- <div class="mgrid">${cards.map((c,i)=>`<div class="mc"><div class="a"><span>${c[0]}</span><span class="${c[4]?'u':'d'}"><b>${c[4]?'▲':'▼'} ${c[2]}</b><em>${c[3]}</em></span></div><div class="b"><strong>${c[1]}</strong>${spk(c[4],i)}</div></div>`).join('')}</div>
+ <div class="mgrid">${HD.map(c=>`<div class="mc"><div class="a"><span>${c[0]}</span><span><b class="mpc"></b><em class="mab"></em></span></div><div class="b"><strong></strong><svg viewBox="0 0 40 14" class="spk"><path d=""/></svg></div></div>`).join('')}</div>
  ${lnav('home')}</div>`};
-$('#hphone').innerHTML=`<div class="phone"><div class="scrs"><div class="scr s0">${HOMEM()}</div></div></div>`;$('#pphone').innerHTML=`<div class="phone"><div class="scrs"><div class="scr s0">${LIVE[0]()}</div><div class="scr s1">${LIVE[2]()}</div><span class="tap"></span></div></div>`;
+const homeLive=()=>{clearInterval(window.__hl);clearInterval(window.__hc);const root=$('#hphone');if(!root)return;
+ const st=HD.map(c=>{const prev=c[1]-c[2];return{prev,p:c[1],h:Array.from({length:12},(_,i)=>c[1]-c[2]*(1-i/11)*.6+(Math.random()-.5)*Math.abs(c[2])*.5)}});
+ const draw=()=>{root.querySelectorAll('.mc').forEach((el,i)=>{const s=st[i],c=HD[i],ch=s.p-s.prev,up=ch>=0,mn=Math.min(...s.h),mx=Math.max(...s.h),r=(mx-mn)||1;
+  el.querySelector('.a>span:last-child').className=up?'u':'d';
+  el.querySelector('.mpc').textContent=(up?'▲ +':'▼ ')+(ch/s.prev*100).toFixed(2)+'%';
+  el.querySelector('.mab').textContent=(up?'+':'')+ch.toFixed(2);
+  el.querySelector('strong').textContent=c[4]+hfmt(s.p,c[3]);
+  const sv=el.querySelector('.spk');sv.setAttribute('class','spk '+(up?'u':'d'));
+  sv.firstChild.setAttribute('d',s.h.map((v,k)=>(k?'L':'M')+(k*3.6).toFixed(1)+' '+(12-(v-mn)/r*11).toFixed(1)).join(' '))})};
+ draw();
+ if(document.documentElement.classList.contains('a11y-still')||matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+ window.__hl=setInterval(()=>{const i=Math.floor(Math.random()*6),s=st[i],vol=HD[i][0]==='VIX'?.004:.0006;s.p+=s.p*(Math.random()-.5)*2*vol;s.h.push(s.p);s.h.shift();draw();const e=root.querySelectorAll('.mc')[i];e.classList.remove('fl');void e.offsetWidth;e.classList.add('fl')},800);
+ window.__hc=setInterval(()=>{root.querySelectorAll('.mclk b[data-z]').forEach(b=>b.textContent=htm(b.dataset.z))},1000)};
+$('#hphone').innerHTML=`<div class="phone"><div class="scrs"><div class="scr s0">${HOMEM()}</div></div></div>`;homeLive();$('#pphone').innerHTML=`<div class="phone"><div class="scrs"><div class="scr s0">${LIVE[0]()}</div><div class="scr s1">${LIVE[2]()}</div><span class="tap"></span></div></div>`;
 setInterval(liveTick,RM?5000:1500);
 function paint(){
   const L=T[lang],h=document.documentElement;
