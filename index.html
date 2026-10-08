@@ -658,6 +658,9 @@ html.a11y-still .ltape>div{animation:none!important}
 :root{--muted:#B4C3D0;--silver:#D3DEE8;--line:rgba(184,200,213,.30)}
 .dark p,.dark .sub,.dark .lead{color:#C9D5DF}
 .dark .blobs i:nth-child(2){opacity:.28}
+
+@media(min-width:641px){.stats{grid-template-columns:repeat(3,1fr)!important;gap:12px}.stats>div b{font-size:clamp(44px,8vw,96px)}}
+@media(max-width:640px){.stats{grid-template-columns:1fr!important}}
 </style>
 </head>
 <body>
